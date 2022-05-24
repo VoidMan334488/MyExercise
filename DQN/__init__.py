@@ -55,7 +55,8 @@ class Deep_Q_N():
         self.qe_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='eval')
         self.qt_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='target')
         #2.4 定义新旧参数的替换操作
-        self.update_old_q_op=[old_q.assign((1 - self.tau) * old_q + self.tau * p) for p, old_q in zip(self.qe_params, self.qt_params)]
+        self.update_old_q_op=[old_q.assign((1 - self.tau) * old_q + self.tau * p)
+        for p, old_q in zip(self.qe_params, self.qt_params)]
         #3. 构建损失函数
         #td目标
         self.Q_target = tf.placeholder(tf.float32, [None])
@@ -80,3 +81,5 @@ class Deep_Q_N():
         with tf.variable_scope(scope):
             h_convl = tf.layers.conv2d(inputs=obs, filters=32, kernel_size=[8,8],
             strides=4,padding="same",activation=tf.nn.relu,
+            kernel_initializer=tf.random_normal_initializer(mean=0, stddev=0.1),
+            bias_initializer=tf.constant_initializer(0.1),trainable=trainable)
