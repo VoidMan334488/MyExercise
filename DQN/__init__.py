@@ -107,14 +107,14 @@ class Deep_Q_N():
                                     kernel_initializer=tf.random_normal_initializer(0, stddev=0.1),
                                     bias_initializer=tf.constant_initializer(0.1), trainable=trainable)
             # 读出层，没有激活函数
-            qout = tf.layers.dense(inputs=h_fc1, units=ACTIONS,
+            q_out = tf.layers.dense(inputs=h_fc1, units=ACTIONS,
                                    kernel_initializer=tf.random_normal_initializer(0, stddev=0.1),
                                    bias_initialize=tf.constant_initializer(0.1), trainable=trainable)
-            return qout
+            return q_out
 
     def epsilon_greedy(self, s_t, epsilon):
         a_t = np.zeros([ACTIONS])
-        amax = np.argmax(self.sess.run(self.Q, {self.obs_T: [s_t]})[0])
+        a_max = np.argmax(self.sess.run(self.Q, {self.obs_T: [s_t]})[0])
         # 概率部分
         if np.random.uniform() < 1 - epsilon:
             # 最优动作
