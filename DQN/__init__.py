@@ -8,6 +8,7 @@ sys.path.append("game/")
 import game.wrapped_flappy_bird as game
 import random
 
+
 GAME = 'flappy bird'
 ACTIONS = 2
 GAMMA = 0.99
